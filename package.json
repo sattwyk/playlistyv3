@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "db:dev": "docker run -p 8080:8080 -d ghcr.io/tursodatabase/libsql-server:latest"
   },
   "dependencies": {
     "@clerk/nextjs": "^4.29.2",
