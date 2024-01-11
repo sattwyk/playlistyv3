@@ -1,4 +1,3 @@
-import { getErrorMessage } from "@/lib/utils";
 import { NextResponse } from "next/server";
 import { WebhookEvent } from "@clerk/nextjs/server";
 import { headers } from 'next/headers'
@@ -32,6 +31,7 @@ export async function POST(req: Request) {
             case "user.created": {
                 const { id } = payload.data
                 await db.insert(users).values({ clerkId: id })
+                console.log("Successfully created the user");
                 return NextResponse.json({ message: "Successfully created the user" })
 
             }
@@ -43,6 +43,7 @@ export async function POST(req: Request) {
             case "user.deleted": {
                 const { id } = payload.data
                 await db.delete(users).where(eq(users.clerkId, id!));
+                console.log("Successfully deleted the user");
                 return NextResponse.json({ message: "Successfully deleted the user" })
             }
         }
