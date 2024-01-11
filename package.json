@@ -7,6 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
+    "lt": "lt --port 3000 --subdomain playlisty",
     "db:dev": "docker run -p 8080:8080 -d ghcr.io/tursodatabase/libsql-server:latest"
   },
   "dependencies": {
@@ -18,6 +19,7 @@
     "drizzle-orm": "^0.29.3",
     "drizzle-zod": "^0.5.1",
     "googleapis": "^130.0.0",
+    "localtunnel": "^2.0.2",
     "lucide-react": "^0.307.0",
     "next": "14.0.4",
     "react": "^18",
