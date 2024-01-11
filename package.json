@@ -10,7 +10,9 @@
     "lint": "next lint",
     "lt": "lt --port 3000 --subdomain playlisty-local-dev-tunnel",
     "db:dev": "docker compose up",
-    "db:studio": "drizzle-kit studio --port 5000"
+    "db:studio": "drizzle-kit studio --port 5000 --verbose --config=drizzle.config.dev.ts",
+    "db:migrate": "drizzle-kit generate:sqlite --config=drizzle.config.dev.ts",
+    "db:push": "drizzle-kit push:sqlite --config=drizzle.config.dev.ts"
   },
   "dependencies": {
     "@clerk/nextjs": "^4.29.2",
