@@ -9,7 +9,8 @@
     "start": "next start",
     "lint": "next lint",
     "lt": "lt --port 3000 --subdomain playlisty",
-    "db:dev": "docker run -p 8080:8080 -d ghcr.io/tursodatabase/libsql-server:latest"
+    "db:dev": "docker run -p 8080:8080 --name playlisty-db ghcr.io/tursodatabase/libsql-server:latest",
+    "db:studio": "drizzle-kit studio --port 5000"
   },
   "dependencies": {
     "@clerk/nextjs": "^4.29.2",
