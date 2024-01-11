@@ -4,6 +4,6 @@ export default {
     out: "./db/migrations",
     driver: "libsql",
     dbCredentials: {
-        url: process.env.DATABASE_URL!
+        url: "http://localhost:8080/"
     }
 } satisfies Config;
