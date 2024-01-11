@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "local": "concurrently -n nextjs,proxy,sqlite,drizzle-studio -c cyan,yellow,green,blue \"pnpm run dev\" \"pnpm run lt\" \"pnpm run db:dev\" \"pnpm run db:studio\"",
+    "local": "concurrently -n nextjs,proxy,libsql,drizzle-studio -c cyan,yellow,green,blue \"pnpm run dev\" \"pnpm run lt\" \"pnpm run db:dev\" \"pnpm run db:studio\"",
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
