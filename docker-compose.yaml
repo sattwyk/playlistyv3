@@ -1,0 +1,19 @@
+version: '3'
+
+name: playlisty
+
+services:
+
+  db:
+    image: ghcr.io/libsql/sqld:latest
+    container_name: playlisty-db
+    restart: "no"
+    ports:
+      - 8080:8080
+    volumes:
+      - sqld_data:/var/lib/sqld
+    environment:
+      TURSO_DATABASE_PATH: /var/lib/sqld
+
+volumes:
+  sqld_data:
