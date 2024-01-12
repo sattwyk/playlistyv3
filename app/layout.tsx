@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import './globals.css';
 import { Providers } from './providers';
+import { Toaster } from '@/components/ui/sonner';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -16,10 +17,13 @@ export default async function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <Providers>
-      <html lang='en' suppressHydrationWarning>
-        <body className={inter.className}>{children}</body>
-      </html>
-    </Providers>
+    <html lang='en' suppressHydrationWarning>
+      <body className={inter.className}>
+        <Providers>
+          {children}
+          <Toaster />
+        </Providers>
+      </body>
+    </html>
   );
 }
