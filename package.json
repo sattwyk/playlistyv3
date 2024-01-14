@@ -57,6 +57,7 @@
     "googleapis": "^130.0.0",
     "imagemin": "^8.0.1",
     "imagemin-jpegtran": "^7.0.0",
+    "immer": "^10.0.3",
     "localtunnel": "^2.0.2",
     "lucide-react": "^0.307.0",
     "nanoid": "^5.0.4",
