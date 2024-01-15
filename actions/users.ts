@@ -1,5 +1,5 @@
 'use server'
 
-export function User() {
+export async function User() {
 
 }

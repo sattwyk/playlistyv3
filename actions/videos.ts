@@ -1,6 +1,6 @@
 'use server'
 
 
-export function getVideo() {
+export async function getVideo() {
 
 }
