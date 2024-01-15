@@ -114,7 +114,7 @@ export async function getPlaylist() {
 
         const userPlaylists = await db.select({
             playlistId: playlists.playlistId,
-            playlistTitle: playlists.title,
+            title: playlists.title,
             channelTitle: playlists.channelTitle,
             thumbnail: {
                 url: playlists.thumbnailUrl,
