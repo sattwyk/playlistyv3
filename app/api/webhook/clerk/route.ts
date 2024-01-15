@@ -3,7 +3,7 @@ import { WebhookEvent } from "@clerk/nextjs/server";
 import { headers } from 'next/headers'
 import { Webhook } from "svix";
 import { db } from "@/db";
-import { users } from "@/db/schema/users";
+import { users } from "@/db/schema";
 import { eq } from "drizzle-orm";
 
 const webhookSecret = process.env.CLERK_WEBHOOK_SECRET || ``;
