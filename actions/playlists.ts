@@ -105,4 +105,29 @@ export async function addPlaylist(data: Data) {
     }
 }
 
+export async function getPlaylist() {
+    try {
+        const user = auth()
+        const clerkId = user.userId
 
+        if (!clerkId) return redirect('/sign-in')
+
+        const userPlaylists = await db.select({
+            playlistId: playlists.playlistId,
+            playlistTitle: playlists.title,
+            channelTitle: playlists.channelTitle,
+            thumbnail: {
+                url: playlists.thumbnailUrl,
+                height: playlists.thumbnailHeight,
+                width: playlists.thumbnailWidth,
+            }
+        }).from(playlists).where(eq(playlists.clerkId, clerkId)).all()
+
+        return { userPlaylists, error: null }
+
+
+    } catch (error) {
+
+        return { error: getErrorMessage(error), userPlaylists: null }
+    }
+}
