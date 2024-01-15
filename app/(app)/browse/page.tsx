@@ -1,16 +1,16 @@
-import { AddPlaylistDialog } from '@/app/dashboard/components/add-playlist-dialog';
-import { AlbumArtwork } from '@/app/dashboard/components/album-artwork';
-import { PodcastEmptyPlaceholder } from '@/app/dashboard/components/podcast-empty-placeholder';
+import { AddPlaylistDialog } from './add-playlist-dialog';
+import { PlaylistThumbnail } from '@/components/playlist-thumbnail';
+import { PlaylistEmptyPlaceholder } from './playlist-empty-placeholder';
 import { Button } from '@/components/ui/button';
 import { ScrollBar } from '@/components/ui/scroll-area';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Separator } from '@/components/ui/separator';
 import { PlusCircleIcon } from 'lucide-react';
-import { getUserPlaylists } from '@/lib/youtube';
+import { getPlaylist } from '@/actions';
 
 export default async function BrowsePage() {
-  const { playlists, error } = await getUserPlaylists();
+  const { userPlaylists, error } = await getPlaylist();
 
   if (error) {
   }
@@ -51,16 +51,17 @@ export default async function BrowsePage() {
           <div className='relative'>
             <ScrollArea>
               <div className='flex space-x-4 pb-4'>
-                {playlists?.map((playlist) => (
-                  <AlbumArtwork
+                {userPlaylists?.map((playlist) => (
+                  <PlaylistThumbnail
                     key={playlist.playlistId}
                     className='w-[250px]'
                     aspectRatio='landscape'
                     title={playlist.title}
-                    channel={playlist.channelTitle}
-                    url={playlist.thumbnail?.url ?? ''}
-                    width={playlist.thumbnail?.width}
-                    height={playlist.thumbnail?.height}
+                    channel={playlist.channelTitle ?? ''}
+                    url={playlist.thumbnail.url}
+                    // blurDataURL={playlist.thumbnail?.blurDataURL!}
+                    width={playlist.thumbnail.width}
+                    height={playlist.thumbnail.height}
                   />
                 ))}
               </div>
@@ -109,7 +110,7 @@ export default async function BrowsePage() {
             </div>
           </div>
           <Separator className='my-4' />
-          <PodcastEmptyPlaceholder />
+          <PlaylistEmptyPlaceholder />
         </TabsContent>
       </Tabs>
     </main>
