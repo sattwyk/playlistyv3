@@ -2,7 +2,7 @@ import * as React from 'react';
 import Link from 'next/link';
 
 import { siteConfig } from '@/config/site';
-import { cn } from '@/lib/utils';
+import { cn } from '@/utils';
 import { Icons } from '@/components/icons';
 
 interface MainNavProps {

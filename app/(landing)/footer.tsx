@@ -1,7 +1,7 @@
 import * as React from 'react';
 
 import { siteConfig } from '@/config/site';
-import { cn } from '@/lib/utils';
+import { cn } from '@/utils';
 import { Icons } from '@/components/icons';
 
 export function Footer({ className }: React.HTMLAttributes<HTMLElement>) {
