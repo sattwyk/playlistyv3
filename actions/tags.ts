@@ -33,11 +33,11 @@ export async function getUserTags() {
         const safeUserTags = user_tags.map((tag) => selectTagSchema.parse(tag));
 
         console.log('getUserTags: Tags parsed successfully');
-        return safeUserTags;
+        return { userTags: safeUserTags, error: null };
 
     } catch (error) {
         console.error(`getUserTags: Error occurred - ${getErrorMessage(error)}`);
-        return null;
+        return { error: getErrorMessage(error), userTags: null };
     }
 }
 
