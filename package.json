@@ -55,8 +55,6 @@
     "drizzle-zod": "^0.5.1",
     "embla-carousel-react": "8.0.0-rc19",
     "googleapis": "^130.0.0",
-    "imagemin": "^8.0.1",
-    "imagemin-jpegtran": "^7.0.0",
     "immer": "^10.0.3",
     "localtunnel": "^2.0.2",
     "lucide-react": "^0.307.0",
