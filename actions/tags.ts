@@ -30,7 +30,10 @@ export async function getUserTags() {
             .where(eq(userTags.clerkId, clerkId)).all();
 
         console.log(`getUserTags: Retrieved ${user_tags.length} tags for clerkId: ${clerkId}`);
-        const safeUserTags = user_tags.map((tag) => selectTagSchema.parse(tag));
+        const safeUserTags = user_tags.map((tag) => selectTagSchema.omit({
+            createdAt: true,
+            updatedAt: true
+        }).parse(tag));
 
         console.log('getUserTags: Tags parsed successfully');
         return { userTags: safeUserTags, error: null };
