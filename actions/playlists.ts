@@ -114,14 +114,14 @@ export async function addPlaylist(data: Data) {
     }
 }
 
-export async function getPlaylist() {
+export async function getUserPlaylists() {
     try {
         const user = auth()
         const clerkId = user.userId
 
         if (!clerkId) return redirect('/sign-in')
 
-        const userPlaylists = await db.select({
+        let userPlaylists = await db.select({
             playlistId: playlists.playlistId,
             title: playlists.title,
             channelTitle: playlists.channelTitle,
