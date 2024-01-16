@@ -7,6 +7,7 @@
     "dev": "next dev",
     "preview": "next build && next start",
     "build": "next build",
+    "build:debug": "next build --debug",
     "start": "next start",
     "lint": "next lint",
     "lt": "lt --port 3000 --subdomain playlisty-local-dev-tunnel",
