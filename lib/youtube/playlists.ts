@@ -62,7 +62,7 @@ const PlaylistSchema = z.object({
 export type PlaylistInfo = z.infer<typeof PlaylistSchema>;
 
 
-export const getPlaylist = unstable_cache(async (playlistId: string): Promise<{ playlist: PlaylistInfo | null, error: string | null }> => {
+export const getPlaylist = async (playlistId: string): Promise<{ playlist: PlaylistInfo | null, error: string | null }> => {
     console.log(`Fetching playlist information for ID: ${playlistId}`);
     try {
         const youtube = google.youtube('v3');
@@ -92,10 +92,7 @@ export const getPlaylist = unstable_cache(async (playlistId: string): Promise<{ 
         console.error(`Error fetching playlist information for ID: ${playlistId}: ${getErrorMessage(error)}`);
         return { error: getErrorMessage(error), playlist: null };
     }
-}, ['yt-playlist'], {
-    tags: ['yt-playlist']
-})
-
+}
 
 export const getUserYoutubePlaylists = unstable_cache(async (): Promise<{ error: string | null, playlists: PlaylistInfo[] | null }> => {
     console.log('Starting to fetch user playlists...');
