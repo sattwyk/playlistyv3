@@ -1,5 +1,6 @@
 import { youtube_v3 } from 'googleapis';
 import { z } from 'zod';
+import { getBase64BlurImageUrl } from '@/utils';
 
 const ThumbnailSchema = z.object({
     url: z.string().url(),
@@ -11,17 +12,20 @@ type Thumbnail = {
     url: string;
     height: number;
     width: number;
-    // blurDataURL: Promise<string>
+    blurDataURL: string
 }
 
-const notFoundThumbnail = { url: `${process.env.NEXT_PUBLIC_URL}/api/thumbnail`, height: 630, width: 1200 }
 
-export function getYouTubeThumbnail(thumbnails: youtube_v3.Schema$ThumbnailDetails | undefined): Thumbnail {
+export async function getYouTubeThumbnail(thumbnails: youtube_v3.Schema$ThumbnailDetails | undefined): Promise<Thumbnail> {
     console.log('Attempting to extract the YouTube thumbnail.');
 
     if (!thumbnails) {
         console.log('No thumbnails provided, returning default not found thumbnail.');
-        return notFoundThumbnail;
+        return {
+            url: `${process.env.NEXT_PUBLIC_URL}/api/thumbnail`,
+            height: 630, width: 1200,
+            blurDataURL: await getBase64BlurImageUrl(`${process.env.NEXT_PUBLIC_URL}/api/thumbnail`)
+        }
     }
 
     const thumbnailTypes = ['maxres', 'standard', 'high', 'medium', 'default'] as const;
@@ -32,14 +36,17 @@ export function getYouTubeThumbnail(thumbnails: youtube_v3.Schema$ThumbnailDetai
             const thumbnail = ThumbnailSchema.safeParse(thumbnails[type]);
             if (thumbnail.success) {
                 console.log(`Successfully parsed thumbnail of type: ${type}`);
-                // return { ...thumbnail.data, blurDataURL: getBase64ImageUrl(thumbnail.data.url) }
-                return thumbnail.data;
+                return { ...thumbnail.data, blurDataURL: await getBase64BlurImageUrl(thumbnail.data.url) }
             } else {
                 console.error(`Failed to parse thumbnail of type: ${type}: ${thumbnail.error}`);
             }
         }
     }
 
-    console.log('No suitable thumbnails found, returning default not found thumbnail.');
-    return notFoundThumbnail;
+    console.log('No thumbnails provided, returning default not found thumbnail.');
+    return {
+        url: `${process.env.NEXT_PUBLIC_URL}/api/thumbnail`,
+        height: 630, width: 1200,
+        blurDataURL: await getBase64BlurImageUrl(`${process.env.NEXT_PUBLIC_URL}/api/thumbnail`)
+    }
 }
