@@ -13,7 +13,9 @@
     "db:dev": "docker compose up",
     "db:studio": "drizzle-kit studio --port 5000 --verbose --config=drizzle.config.dev.ts",
     "db:migrate": "drizzle-kit generate:sqlite --config=drizzle.config.dev.ts",
-    "db:push": "drizzle-kit push:sqlite --config=drizzle.config.dev.ts"
+    "db:push": "drizzle-kit push:sqlite --config=drizzle.config.dev.ts",
+    "db:migrate-prod": "drizzle-kit generate:sqlite --config=drizzle.config.prod.ts",
+    "db:push-prod": "drizzle-kit push:sqlite --config=drizzle.config.prod.ts"
   },
   "dependencies": {
     "@clerk/nextjs": "^4.29.3",
