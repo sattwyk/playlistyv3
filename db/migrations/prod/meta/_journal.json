@@ -1,0 +1,13 @@
+{
+  "version": "5",
+  "dialect": "sqlite",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "5",
+      "when": 1705390397189,
+      "tag": "0000_spooky_piledriver",
+      "breakpoints": true
+    }
+  ]
+}

@@ -1,8 +1,8 @@
 {
   "version": "5",
   "dialect": "sqlite",
-  "id": "c91936c8-1fe0-4c28-9a9b-f422a4d38981",
-  "prevId": "7b3fa28d-ba70-4761-8336-2bb9920cf41e",
+  "id": "be4369d9-aaa3-4c47-ba2e-62b3e577e6a0",
+  "prevId": "00000000-0000-0000-0000-000000000000",
   "tables": {
     "playlists": {
       "name": "playlists",
