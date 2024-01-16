@@ -1,3 +1,3 @@
-export default function DiscoverPage() {
+export default async function DiscoverPage() {
   return <main className='h-full'></main>;
 }

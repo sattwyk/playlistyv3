@@ -1,3 +1,3 @@
-export default function ExtensionPage() {
+export default async function ExtensionPage() {
   return <main className='h-full'></main>;
 }
