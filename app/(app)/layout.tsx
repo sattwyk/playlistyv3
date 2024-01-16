@@ -4,7 +4,7 @@ import { Sidebar } from '@/components/sidebar';
 
 import React from 'react';
 import { ProgressBar } from '@/components/progress-bar';
-import { revalidateTag } from 'next/cache';
+// import { revalidateTag } from 'next/cache';
 
 export const metadata: Metadata = {
   title: 'Music App',
@@ -16,7 +16,7 @@ interface LayoutProps {
 }
 
 export default async function AppLayout({ children }: LayoutProps) {
-  revalidateTag('yt-user-playlists');
+  // revalidateTag('yt-user-playlists');
   return (
     <ProgressBar>
       <main className='min-h-screen bg-background'>
