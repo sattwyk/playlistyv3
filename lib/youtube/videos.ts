@@ -5,6 +5,7 @@ import { z } from 'zod';
 import { getYouTubeThumbnail } from './thubmanail'
 import { getErrorMessage } from '@/utils';
 import { unstable_cache } from "next/cache"
+import { env } from "@/env.mjs"
 
 const VideoSchema = z.object({
     title: z.string(),
@@ -60,7 +61,7 @@ export const getPlaylistVideos = unstable_cache(async (playlistId: string) => {
     try {
         const youtube = google.youtube("v3");
         const response = await youtube.playlistItems.list({
-            key: process.env.GOOGLE_API_KEY,
+            key: env.GOOGLE_API_KEY,
             playlistId: playlistId,
             part: ["snippet"],
             maxResults: 50,

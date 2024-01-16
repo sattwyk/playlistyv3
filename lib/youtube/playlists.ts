@@ -8,6 +8,7 @@ import { getErrorMessage } from '@/utils';
 import { getPlaylistVideos } from './videos';
 import { getYouTubeThumbnail } from './thubmanail';
 import { unstable_cache } from 'next/cache';
+import { env } from "@/env.mjs"
 
 export async function getPlaylistData(playlistId: string) {
     console.log(`Starting to fetch data for playlist ID: ${playlistId}`);
@@ -66,7 +67,7 @@ export const getPlaylist = unstable_cache(async (playlistId: string): Promise<{ 
     try {
         const youtube = google.youtube('v3');
         const response = await youtube.playlists.list({
-            key: process.env.GOOGLE_API_KEY,
+            key: env.GOOGLE_API_KEY,
             id: [playlistId],
             part: ['snippet'],
             maxResults: 1
@@ -111,7 +112,7 @@ export const getUserYoutubePlaylists = unstable_cache(async (): Promise<{ error:
         console.log(`Access token retrieved: ${accessToken.token}`);
         const youtube = google.youtube("v3")
         const response = await youtube.playlists.list({
-            key: process.env.GOOGLE_API_KEY,
+            key: env.GOOGLE_API_KEY,
             access_token: accessToken.token,
             part: ['snippet', 'contentDetails'],
             mine: true,

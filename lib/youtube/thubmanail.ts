@@ -1,6 +1,7 @@
 import { youtube_v3 } from 'googleapis';
 import { z } from 'zod';
 import { getBase64BlurImageUrl } from '@/utils';
+import { env } from "@/env.mjs"
 
 const ThumbnailSchema = z.object({
     url: z.string().url(),
@@ -22,9 +23,9 @@ export async function getYouTubeThumbnail(thumbnails: youtube_v3.Schema$Thumbnai
     if (!thumbnails) {
         console.log('No thumbnails provided, returning default not found thumbnail.');
         return {
-            url: `${process.env.NEXT_PUBLIC_URL}/api/thumbnail`,
+            url: `${env.NEXT_PUBLIC_URL}/api/thumbnail`,
             height: 630, width: 1200,
-            blurDataURL: await getBase64BlurImageUrl(`${process.env.NEXT_PUBLIC_URL}/api/thumbnail`)
+            blurDataURL: await getBase64BlurImageUrl(`${env.NEXT_PUBLIC_URL}/api/thumbnail`)
         }
     }
 
@@ -45,8 +46,8 @@ export async function getYouTubeThumbnail(thumbnails: youtube_v3.Schema$Thumbnai
 
     console.log('No thumbnails provided, returning default not found thumbnail.');
     return {
-        url: `${process.env.NEXT_PUBLIC_URL}/api/thumbnail`,
+        url: `${env.NEXT_PUBLIC_URL}/api/thumbnail`,
         height: 630, width: 1200,
-        blurDataURL: await getBase64BlurImageUrl(`${process.env.NEXT_PUBLIC_URL}/api/thumbnail`)
+        blurDataURL: await getBase64BlurImageUrl(`${env.NEXT_PUBLIC_URL}/api/thumbnail`)
     }
 }
