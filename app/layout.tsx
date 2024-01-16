@@ -6,7 +6,6 @@ import { Toaster } from '@/components/ui/sonner';
 
 const inter = Inter({ subsets: ['latin'] });
 
-export const runtime = 'edge';
 export const preferredRegion = ['arn1', 'bom1', 'sfo1'];
 
 export const metadata: Metadata = {
