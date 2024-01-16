@@ -14,42 +14,46 @@ import {
   ContextMenuTrigger,
 } from '@/components/ui/context-menu';
 
-interface PlaylistThumbnailProps extends React.HTMLAttributes<HTMLDivElement> {
+interface ThumbnailProps extends React.HTMLAttributes<HTMLDivElement> {
   aspectRatio: 'portrait' | 'square' | 'landscape';
   width: number;
   height: number;
   title?: string;
   url: string;
+  idx: number;
   channel?: string;
+  blurDataURL: string;
 }
 
-export function PlaylistThumbnail({
+export function Thumbnail({
   aspectRatio = 'portrait',
   width,
   height,
   title,
   channel,
-  // blurDataURL,
+  blurDataURL,
   url,
+  idx,
   className,
   ...props
-}: PlaylistThumbnailProps) {
-  if (!url && !height && !width) return null;
-
+}: ThumbnailProps) {
   return (
     <div className={cn('space-y-3', className)} {...props}>
       <ContextMenu>
         <ContextMenuTrigger>
           <div className='overflow-hidden rounded-md'>
             <Image
-              src={url ?? ''}
+              src={url}
+              style={{ transform: 'translate3d(0, 0, 0)' }}
               alt={title ?? ''}
               width={width}
               height={height}
-              // placeholder='blur'
-              // blurDataURL={blurDataURL}
+              placeholder='blur'
+              blurDataURL={blurDataURL}
+              priority={idx < 4}
+              loading={idx < 4 ? 'eager' : 'lazy'}
               className={cn(
-                'h-auto w-auto object-cover transition-all hover:scale-105',
+                'transform h-auto w-auto object-cover transition-all hover:scale-105',
                 match(aspectRatio)
                   .with('portrait', () => 'aspect-[3/4]')
                   .with('square', () => 'aspect-square')
