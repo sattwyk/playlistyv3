@@ -30,13 +30,15 @@ export async function POST(req: Request) {
         switch (payload.type) {
             case "user.created": {
                 const { id } = payload.data
-                await db.insert(users).values({ clerkId: id })
+                await db.insert(users).values({ clerkId: id, updatedAt: new Date(Date.now()) })
                 console.log("Successfully created the user");
                 return NextResponse.json({ message: "Successfully created the user" })
 
             }
             case "user.updated": {
                 //TODO: Update user in the database
+                const { id } = payload.data
+                await db.update(users).set({ updatedAt: new Date(Date.now()) }).where(eq(users.clerkId, id))
                 return NextResponse.json({ message: "Successfully updated the user" })
 
             }
