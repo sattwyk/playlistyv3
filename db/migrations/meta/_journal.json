@@ -29,6 +29,13 @@
       "when": 1705296174500,
       "tag": "0003_romantic_fallen_one",
       "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "5",
+      "when": 1705366881342,
+      "tag": "0004_ambiguous_killmonger",
+      "breakpoints": true
     }
   ]
 }
