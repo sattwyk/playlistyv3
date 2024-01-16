@@ -3,15 +3,15 @@
 import { insertPlaylistSchema, playlists, insertTagSchema, tags, playlistTags, userTags, insertVideoSchema, videos } from "@/db/schema"
 import { z } from "zod"
 import { db } from "@/db"
-import { getErrorMessage } from "@/utils"
+import { getBase64BlurImageUrl, getErrorMessage } from "@/utils"
 import { and, eq } from "drizzle-orm"
 import { auth } from "@clerk/nextjs"
 import { redirect } from "next/navigation"
-import { revalidatePath } from "next/cache"
+import { revalidatePath, revalidateTag } from "next/cache"
 
-type BasePlaylist = Omit<z.infer<typeof insertPlaylistSchema>, "publishedAt">;
-type BaseVideo = Omit<z.infer<typeof insertVideoSchema>, "publishedAt">;
-type BaseTag = z.infer<typeof insertTagSchema>;
+type BasePlaylist = Omit<z.infer<typeof insertPlaylistSchema>, "publishedAt" | "updatedAt" | "playlistId" | "createdAt" | "clerkId" | "hasFinished">;
+type BaseVideo = Omit<z.infer<typeof insertVideoSchema>, "publishedAt" | "updatedAt" | "videoId" | "playlistId" | "createdAt" | "hasWatched">;
+type BaseTag = Omit<z.infer<typeof insertTagSchema>, "updatedAt" | "createdAt">;
 
 interface Playlist extends BasePlaylist {
     publishedAt: string; // Override the publishedAt property for serialization
@@ -40,16 +40,25 @@ export async function addPlaylist(data: Data) {
         }
 
         const safePlaylist = insertPlaylistSchema.parse({
-            ...data.playlist, clerkId, publishedAt: new Date(Date.parse(data.playlist.publishedAt))
+            ...data.playlist, clerkId,
+            publishedAt: new Date(Date.parse(data.playlist.publishedAt)),
+            updatedAt: new Date(Date.now())
         });
         const safeVideos = data.videos.map((video) => insertVideoSchema.parse({
-            ...video, publishedAt: new Date(Date.parse(video.publishedAt))
+            ...video,
+            publishedAt: new Date(Date.parse(video.publishedAt)),
+            updatedAt: new Date(Date.now())
         }));
-        const safeTags = data.tags.map((tag) => insertTagSchema.parse(tag));
+        const safeTags = data.tags.map((tag) => insertTagSchema.parse({
+            ...tag,
+            title: tag.title.toLowerCase().trim(),
+            updatedAt: new Date(Date.now())
+        }));
 
         await db.transaction(async (tx) => {
 
             console.log('Starting transaction for playlist');
+
 
             const [playlistResult] = await tx.insert(playlists).values(safePlaylist).returning({ playlistId: playlists.playlistId });
             const { playlistId } = playlistResult;
@@ -122,6 +131,86 @@ export async function getPlaylist() {
                 width: playlists.thumbnailWidth,
             }
         }).from(playlists).where(eq(playlists.clerkId, clerkId)).all()
+
+        const userPlaylistsWithBlurUrl = await Promise.all(
+            userPlaylists.map(async (playlist) => ({
+                ...playlist,
+                thumbnail: {
+                    ...playlist.thumbnail,
+                    blurDataURL: await getBase64BlurImageUrl(playlist.thumbnail.url)
+                }
+            }))
+        );
+
+        return { userPlaylists: userPlaylistsWithBlurUrl, error: null }
+
+
+    } catch (error) {
+
+        return { error: getErrorMessage(error), userPlaylists: null }
+    }
+}
+
+export async function getUserOriginPlaylistIds() {
+    try {
+        const user = auth()
+        const clerkId = user.userId
+
+        if (!clerkId) return redirect('/sign-in')
+
+        const userOriginPlaylistIds = await db.select({
+            playlistId: playlists.originYTPlaylistId,
+        }).from(playlists).where(eq(playlists.clerkId, clerkId)).all()
+
+
+        return {
+            userOriginPlaylistIds: userOriginPlaylistIds.map(
+                (playlist) => playlist.playlistId
+            ), error: null
+        }
+
+
+    } catch (error) {
+
+        return { error: getErrorMessage(error), userOriginPlaylistIds: null }
+    }
+}
+
+
+export async function getUserPlaylistsForTag(tagTitle: string) {
+    try {
+        const user = auth()
+        const clerkId = user.userId
+
+        if (!clerkId) return redirect('/sign-in')
+
+        const tag = await db.select()
+            .from(tags)
+            .where(eq(tags.title, tagTitle))
+            .execute();
+        const tagId = tag[0]?.tagId;
+
+        if (!tagId) {
+            // Handle the case where no tag matches the given title
+            return { getUserTagPlaylists: [], error: null };
+        }
+
+        const playlistsForTag = await db.select({
+            playlistId: playlistTags.playlistId,
+            playlistTitle: playlists.title,
+            channelTitle: playlists.channelTitle,
+            thumbnailUrl: playlists.thumbnailUrl,
+            thumbnailWidth: playlists.thumbnailWidth,
+            thumbnailHeight: playlists.thumbnailHeight,
+        })
+            .from(playlistTags)
+            .innerJoin(playlists, eq(playlistTags.playlistId, playlists.playlistId))
+            .where(and(eq(playlistTags.tagId, tagId), eq(playlists.clerkId, clerkId)))
+            .execute();
+
+        const userPlaylists = await Promise.all(playlistsForTag.map(async (playlist) => ({
+            ...playlist, blurDataURL: await getBase64BlurImageUrl(playlist.thumbnailUrl)
+        })))
 
         return { userPlaylists, error: null }
 
