@@ -12,7 +12,6 @@ const nextConfig = {
       },
     ],
   },
-  telemetry: false,
 };
 
 export default nextConfig;
