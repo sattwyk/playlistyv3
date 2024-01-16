@@ -5,8 +5,10 @@ import { Webhook } from "svix";
 import { db } from "@/db";
 import { users } from "@/db/schema";
 import { eq } from "drizzle-orm";
+import { env } from "@/env.mjs"
 
-const webhookSecret = process.env.CLERK_WEBHOOK_SECRET || ``;
+
+const webhookSecret = env.CLERK_WEBHOOK_SECRET;
 
 async function validateRequest(request: Request) {
     const payloadString = await request.text();
