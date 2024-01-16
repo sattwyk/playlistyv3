@@ -1,10 +1,10 @@
-import { getPlaylist, getUserTags } from '@/actions';
+import { getUserPlaylists, getUserTags } from '@/actions';
 import { Sidebar as SIDEBAR } from './sidebar';
 interface SidebarProps extends React.HTMLAttributes<HTMLDivElement> {}
 
 export async function Sidebar({ className }: SidebarProps) {
   const [playlistsResult, userTagsResult] = await Promise.allSettled([
-    getPlaylist(),
+    getUserPlaylists(),
     getUserTags(),
   ]);
 
