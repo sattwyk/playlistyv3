@@ -6,15 +6,15 @@ export default async function PlaylistAddPage({
   params,
 }: {
   params: {
-    playlistId: string;
+    ytPlaylistId: string;
   };
 }) {
-  if (params.playlistId === 'new') {
+  if (params.ytPlaylistId === 'new') {
     return <main className='min-h-full'>new boi</main>;
   }
 
   const [dataResult, userTagsResult] = await Promise.allSettled([
-    getPlaylistData(params.playlistId),
+    getPlaylistData(params.ytPlaylistId),
     getUserTags(),
   ]);
 

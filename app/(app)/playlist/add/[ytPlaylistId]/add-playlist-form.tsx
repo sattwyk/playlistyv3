@@ -1,6 +1,6 @@
 'use client';
 
-import { PlaylistThumbnail } from '@/components/playlist-thumbnail';
+import { Thumbnail } from '@/components/thumbnail';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Separator } from '@/components/ui/separator';
 import { Textarea } from '@/components/ui/textarea';
@@ -69,11 +69,12 @@ function AddPlaylistFormConsumer() {
     <div className='grid grid-cols-2 gap-3'>
       <div className='flex gap-3'>
         <div className='flex flex-col gap-3'>
-          <PlaylistThumbnail
+          <Thumbnail
             className='w-full'
+            idx={0}
             url={store.playlist.thumbnail.url}
             // title={playlist.title}
-            // blurDataURL={playlist.thumbnail?.blurDataURL}
+            blurDataURL={store.playlist.thumbnail.blurDataURL}
             channel={store.playlist.channelTitle}
             height={store.playlist.thumbnail.height}
             width={store.playlist.thumbnail.width}
@@ -152,7 +153,10 @@ function AddPlaylistFormConsumer() {
                         if (e.key === 'Enter') {
                           if (e.currentTarget.value) {
                             store.addSelectedTag({
-                              title: e.currentTarget.value,
+                              title: e.currentTarget.value
+                                .toLowerCase()
+                                .trim()
+                                .split(' ')[0],
                               color: '#fff',
                             });
                           }
@@ -192,6 +196,7 @@ function AddPlaylistFormConsumer() {
             onClick={async () => {
               const playlist = {
                 ...store.playlist,
+                originYTPlaylistId: store.playlist.youtubePlaylistId,
                 thumbnailHeight: store.playlist.thumbnail.height,
                 thumbnailWidth: store.playlist.thumbnail.width,
                 thumbnailUrl: store.playlist.thumbnail.url,
@@ -199,6 +204,7 @@ function AddPlaylistFormConsumer() {
 
               const videos = store.videos.map((video) => ({
                 ...video,
+                originalYTVideoId: video.youtubeVideoId,
                 thumbnailHeight: video.thumbnail.height,
                 thumbnailWidth: video.thumbnail.width,
                 thumbnailUrl: video.thumbnail.url,
@@ -259,14 +265,15 @@ function AddPlaylistFormConsumer() {
           </div>
         </div>
         <ScrollArea className='h-[600px] w-full grid gap-1'>
-          {store.videos.map((video) => (
-            <div key={video.videoId} className='flex gap-2 items-center'>
-              <PlaylistThumbnail
+          {store.videos.map((video, index) => (
+            <div key={video.youtubeVideoId} className='flex gap-2 items-center'>
+              <Thumbnail
                 className='max-w-[120px]'
+                idx={index}
                 url={video.thumbnail.url}
                 //   title={video.title}
                 //   channel={video.channelTitle}
-                // blurDataURL={video.thumbnail?.blurDataURL!}
+                blurDataURL={video.thumbnail.blurDataURL}
                 height={video.thumbnail.height}
                 width={video.thumbnail.width}
                 aspectRatio='landscape'
