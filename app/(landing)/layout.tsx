@@ -1,7 +1,7 @@
 import { Footer } from './footer';
 import { Header } from './header';
 
-export default function LandingLayout({
+export default async function LandingLayout({
   children,
 }: {
   children: React.ReactNode;
