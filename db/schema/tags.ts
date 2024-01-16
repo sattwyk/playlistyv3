@@ -3,11 +3,14 @@ import { text, sqliteTable, integer, primaryKey } from "drizzle-orm/sqlite-core"
 import { playlists } from "./playlists";
 import { users } from "./users"
 import { createInsertSchema, createSelectSchema } from 'drizzle-zod'
+import { sql } from "drizzle-orm";
 
 export const tags = sqliteTable("tags", {
     tagId: integer("tag_id").primaryKey({ autoIncrement: true }),
     title: text("title").unique().notNull(),
     color: text("color").notNull(),
+    createdAt: integer('created_at', { mode: "timestamp" }).notNull().default(sql`CURRENT_TIMESTAMP`),
+    updatedAt: integer('updated_at', { mode: "timestamp" }).notNull(),
 },)
 
 export const insertTagSchema = createInsertSchema(tags);
