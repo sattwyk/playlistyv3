@@ -1,5 +1,16 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
-  "installCommand": "rm -rf node_modules && pnpm install --force --frozen-lockfile",
-  "buildCommand": "pnpm build"
+  "installCommand": "pnpm install",
+  "buildCommand": "pnpm build",
+  "builds": [
+    {
+      "src": "package.json",
+      "use": "@vercel/node",
+      "config": {
+        "overrides": {
+          "sharp": "0.33.1"
+        }
+      }
+    }
+  ]
 }
