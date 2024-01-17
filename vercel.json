@@ -1,6 +1,6 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
-  "installCommand": "npm cache clean --force && rm -rf node_modules && npm install --force",
+  "installCommand": "rm -rf package-lock.json && npm install --force",
   "env": {
     "VERCEL_FORCE_NO_BUILD_CACHE": "1"
   }
