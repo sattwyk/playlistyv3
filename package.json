@@ -97,9 +97,6 @@
   "pnpm": {
     "supportedArchitectures": {
       "os": [
-        "win32",
-        "darwin",
-        "linux",
         "current"
       ],
       "cpu": [
