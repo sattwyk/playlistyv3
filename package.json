@@ -19,7 +19,7 @@
     "db:push-prod": "drizzle-kit push:sqlite --config=drizzle.config.prod.ts"
   },
   "dependencies": {
-    "@clerk/nextjs": "^4.29.3",
+    "@clerk/nextjs": "^4.29.4",
     "@formkit/auto-animate": "^0.8.1",
     "@hookform/resolvers": "^3.3.4",
     "@libsql/client": "0.4.0-pre.7",
