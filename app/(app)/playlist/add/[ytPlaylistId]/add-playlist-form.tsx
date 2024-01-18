@@ -74,7 +74,7 @@ function AddPlaylistFormConsumer() {
             idx={0}
             url={store.playlist.thumbnail.url}
             // title={playlist.title}
-            blurDataURL={store.playlist.thumbnail.blurDataURL}
+            // blurDataURL={store.playlist.thumbnail.blurDataURL}
             channel={store.playlist.channelTitle}
             height={store.playlist.thumbnail.height}
             width={store.playlist.thumbnail.width}
@@ -273,7 +273,7 @@ function AddPlaylistFormConsumer() {
                 url={video.thumbnail.url}
                 //   title={video.title}
                 //   channel={video.channelTitle}
-                blurDataURL={video.thumbnail.blurDataURL}
+                // blurDataURL={video.thumbnail.blurDataURL}
                 height={video.thumbnail.height}
                 width={video.thumbnail.width}
                 aspectRatio='landscape'

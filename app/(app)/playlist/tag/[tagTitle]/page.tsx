@@ -39,7 +39,7 @@ export default async function TagPlaylists({
                 height={playlist.thumbnailHeight}
                 width={playlist.thumbnailWidth}
                 aspectRatio='landscape'
-                blurDataURL={playlist.blurDataURL}
+                // blurDataURL={playlist.blurDataURL}
               />
             </div>
           );

@@ -54,7 +54,7 @@ export default async function BrowsePage() {
                       title={playlist.title}
                       channel={playlist.channelTitle ?? ''}
                       url={playlist.thumbnail.url}
-                      blurDataURL={playlist.thumbnail.blurDataURL}
+                      // blurDataURL={playlist.thumbnail.blurDataURL}
                       width={playlist.thumbnail.width}
                       height={playlist.thumbnail.height}
                     />

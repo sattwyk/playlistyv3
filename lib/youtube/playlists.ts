@@ -55,7 +55,7 @@ const PlaylistSchema = z.object({
         url: z.string().url(),
         height: z.number(),
         width: z.number(),
-        blurDataURL: z.string()
+        // blurDataURL: z.string()
     })
 });
 

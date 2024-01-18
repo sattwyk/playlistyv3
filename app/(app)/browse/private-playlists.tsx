@@ -57,7 +57,7 @@ export async function PrivatePlaylists() {
                         url={playlist.thumbnail.url}
                         className='w-[150px]'
                         aspectRatio='square'
-                        blurDataURL={playlist.thumbnail.blurDataURL}
+                        // blurDataURL={playlist.thumbnail.blurDataURL}
                         channel={playlist.channelTitle}
                         width={playlist.thumbnail.width}
                         height={playlist.thumbnail.height}
