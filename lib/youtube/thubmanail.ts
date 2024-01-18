@@ -1,6 +1,6 @@
 import { youtube_v3 } from 'googleapis';
 import { z } from 'zod';
-import { getBase64BlurImageUrl } from '@/utils';
+// import { getBase64BlurImageUrl } from '@/utils';
 import { env } from "@/env.mjs"
 
 const ThumbnailSchema = z.object({
@@ -13,7 +13,7 @@ type Thumbnail = {
     url: string;
     height: number;
     width: number;
-    blurDataURL: string
+    // blurDataURL: string
 }
 
 
@@ -25,7 +25,7 @@ export async function getYouTubeThumbnail(thumbnails: youtube_v3.Schema$Thumbnai
         return {
             url: `${env.NEXT_PUBLIC_URL}/api/thumbnail`,
             height: 630, width: 1200,
-            blurDataURL: await getBase64BlurImageUrl(`${env.NEXT_PUBLIC_URL}/api/thumbnail`)
+            // blurDataURL: await getBase64BlurImageUrl(`${env.NEXT_PUBLIC_URL}/api/thumbnail`)
         }
     }
 
@@ -37,7 +37,10 @@ export async function getYouTubeThumbnail(thumbnails: youtube_v3.Schema$Thumbnai
             const thumbnail = ThumbnailSchema.safeParse(thumbnails[type]);
             if (thumbnail.success) {
                 console.log(`Successfully parsed thumbnail of type: ${type}`);
-                return { ...thumbnail.data, blurDataURL: await getBase64BlurImageUrl(thumbnail.data.url) }
+                return {
+                    ...thumbnail.data,
+                    // blurDataURL: await getBase64BlurImageUrl(thumbnail.data.url)
+                }
             } else {
                 console.error(`Failed to parse thumbnail of type: ${type}: ${thumbnail.error}`);
             }
@@ -48,6 +51,6 @@ export async function getYouTubeThumbnail(thumbnails: youtube_v3.Schema$Thumbnai
     return {
         url: `${env.NEXT_PUBLIC_URL}/api/thumbnail`,
         height: 630, width: 1200,
-        blurDataURL: await getBase64BlurImageUrl(`${env.NEXT_PUBLIC_URL}/api/thumbnail`)
+        // blurDataURL: await getBase64BlurImageUrl(`${env.NEXT_PUBLIC_URL}/api/thumbnail`)
     }
 }

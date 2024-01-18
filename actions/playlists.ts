@@ -3,7 +3,10 @@
 import { insertPlaylistSchema, playlists, insertTagSchema, tags, playlistTags, userTags, insertVideoSchema, videos } from "@/db/schema"
 import { z } from "zod"
 import { db } from "@/db"
-import { getBase64BlurImageUrl, getErrorMessage } from "@/utils"
+import {
+    // getBase64BlurImageUrl,
+    getErrorMessage
+} from "@/utils"
 import { and, eq } from "drizzle-orm"
 import { auth } from "@clerk/nextjs"
 import { redirect } from "next/navigation"
@@ -137,7 +140,7 @@ export async function getUserPlaylists() {
                 ...playlist,
                 thumbnail: {
                     ...playlist.thumbnail,
-                    blurDataURL: await getBase64BlurImageUrl(playlist.thumbnail.url)
+                    // blurDataURL: await getBase64BlurImageUrl(playlist.thumbnail.url)
                 }
             }))
         );
@@ -209,7 +212,8 @@ export async function getUserPlaylistsForTag(tagTitle: string) {
             .execute();
 
         const userPlaylists = await Promise.all(playlistsForTag.map(async (playlist) => ({
-            ...playlist, blurDataURL: await getBase64BlurImageUrl(playlist.thumbnailUrl)
+            ...playlist,
+            // blurDataURL: await getBase64BlurImageUrl(playlist.thumbnailUrl)
         })))
 
         return { userPlaylists, error: null }

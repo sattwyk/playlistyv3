@@ -22,7 +22,7 @@ interface ThumbnailProps extends React.HTMLAttributes<HTMLDivElement> {
   url: string;
   idx: number;
   channel?: string;
-  blurDataURL: string;
+  // blurDataURL: string;
 }
 
 export function Thumbnail({
@@ -31,7 +31,7 @@ export function Thumbnail({
   height,
   title,
   channel,
-  blurDataURL,
+  // blurDataURL,
   url,
   idx,
   className,
@@ -48,8 +48,8 @@ export function Thumbnail({
               alt={title ?? ''}
               width={width}
               height={height}
-              placeholder='blur'
-              blurDataURL={blurDataURL}
+              // placeholder='blur'
+              // blurDataURL={blurDataURL}
               priority={idx < 4}
               loading={idx < 4 ? 'eager' : 'lazy'}
               className={cn(
